@@ -101,14 +101,16 @@ compilation_unit
 
 //SHOULD BE OVERRIDEN!
 seq_of_statements 
-    :    select_statement
+    :
+    (    select_statement
     |    update_statement
     |    delete_statement
     |    insert_statement
     |    lock_table_statement
     |    merge_statement
     |    explain_statement
-//    |    case_statement[true]
+    )
+    (    SEMICOLON | EOF )
     ;
 
 explain_statement
@@ -827,6 +829,7 @@ unary_expression
 options
 {
 backtrack=true;
+memoize=true;
 }
     :    MINUS_SIGN unary_expression
     |    PLUS_SIGN unary_expression
@@ -883,6 +886,7 @@ atom
 options
 {
 backtrack=true;
+memoize=true;
 }
     :    (table_element outer_join_sign) => table_element outer_join_sign
     |    bind_variable
