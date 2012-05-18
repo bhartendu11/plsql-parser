@@ -598,6 +598,7 @@ update_statement:
    set salary = 1.1 
    where department_id = 100 
    returning salary into :bnd1>>  OK
+condition18.sql OK
 
 merge_statement:
 merge01.sql OK
