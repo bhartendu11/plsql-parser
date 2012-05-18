@@ -1025,7 +1025,6 @@ unary_expression
 options
 {
 backtrack=true;
-memoize=true;
 }
     :    MINUS_SIGN unary_expression -> ^(UNARY_OPERATOR[$MINUS_SIGN] unary_expression)
     |    PLUS_SIGN unary_expression -> ^(UNARY_OPERATOR[$PLUS_SIGN] unary_expression)
@@ -1084,7 +1083,6 @@ atom
 options
 {
 backtrack=true;
-memoize=true;
 }
     :    (table_element outer_join_sign) => table_element outer_join_sign
     |    bind_variable
