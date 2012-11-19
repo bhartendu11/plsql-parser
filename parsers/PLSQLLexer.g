@@ -815,6 +815,14 @@ SQL92_RESERVED_WITH
     :    'with'
     ;
 
+PLSQL_NON_RESERVED_CAST
+    :    'cast'
+    ;
+
+PLSQL_NON_RESERVED_MULTISET
+	:	'multiset'
+	;
+
 PLSQL_NON_RESERVED_USING
     :    'using'
     ;

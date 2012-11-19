@@ -680,7 +680,8 @@ condition_wrapper
     ;
 
 expression
-    :    (cursor_key LEFT_PAREN (select_key|with_key)) => cursor_expression
+    :    (cursor_key LEFT_PAREN (select_key|with_key)) => cursor_expression 
+//	|    (atom multiset_op atom) => atom multiset_op atom
     |    logical_and_expression ( or_key logical_and_expression )*
     ;
 
@@ -698,7 +699,7 @@ negated_expression
     ;
 
 equality_expression
-    :    multiset_expression
+    :    multiset_comparsion
     (    is_key not_key?
         (    null_key
         |    nan_key
@@ -712,7 +713,7 @@ equality_expression
     ;
 
 
-multiset_expression
+multiset_comparsion
     :    relational_expression
     (    multiset_type of_key? concatenation)?
     ;
@@ -920,12 +921,12 @@ standard_function
                 ( ASTERISK | (distinct_key|unique_key|all_key)? concatenation_wrapper )
             RIGHT_PAREN over_clause?
     |    (cast_key|xmlcast_key) 
-            LEFT_PAREN
-                ( (multiset_key LEFT_PAREN (select_key|with_key)) => multiset_key LEFT_PAREN subquery RIGHT_PAREN
-                | concatenation_wrapper
-                )
-                as_key type_spec
-            RIGHT_PAREN
+		 LEFT_PAREN
+         ( (multiset_key LEFT_PAREN+ (select_key|with_key)) => multiset_key LEFT_PAREN subquery RIGHT_PAREN
+           (as_key type_spec)?
+		 | concatenation_wrapper as_key type_spec
+         )
+         RIGHT_PAREN
     |    chr_key
             LEFT_PAREN 
                 concatenation_wrapper using_key nchar_cs_key 

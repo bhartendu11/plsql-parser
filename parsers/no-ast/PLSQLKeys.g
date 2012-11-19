@@ -1190,7 +1190,8 @@ over_key
     ;
 
 multiset_key
-    :    {input.LT(1).getText().equalsIgnoreCase("multiset")}?=> REGULAR_ID
+//    :    {input.LT(1).getText().equalsIgnoreCase("multiset")}?=> REGULAR_ID
+    :       PLSQL_NON_RESERVED_MULTISET
     ;
 
 connect_by_root_key
@@ -1758,7 +1759,8 @@ match_key
     ;
 
 cast_key
-    :    {input.LT(1).getText().equalsIgnoreCase("cast")}? REGULAR_ID
+//    :    {input.LT(1).getText().equalsIgnoreCase("cast")}? REGULAR_ID
+    :    PLSQL_NON_RESERVED_CAST    
     ;
 
 full_key:    {input.LT(1).getText().equalsIgnoreCase("full")}?=> REGULAR_ID

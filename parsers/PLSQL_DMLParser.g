@@ -853,7 +853,7 @@ negated_expression
 
 equality_expression
 @init    {    boolean isNegated = false;    }
-    :    (multiset_expression -> multiset_expression)
+    :    (multiset_comparsion -> multiset_comparsion)
     (    is_key (not_key {isNegated = true;})?
         (    null_key
                 -> {isNegated}? ^(IS_NOT_NULL $equality_expression)
@@ -881,10 +881,10 @@ equality_expression
     ;
 
 
-multiset_expression
+multiset_comparsion
     :    (relational_expression -> relational_expression)
     (    multiset_type of_key? concatenation
-        -> ^(multiset_type $multiset_expression ^(EXPR concatenation)))?
+        -> ^(multiset_type $multiset_comparsion ^(EXPR concatenation)))?
     ;
 
 multiset_type
@@ -1123,10 +1123,10 @@ standard_function
             RIGHT_PAREN! over_clause?
     |    (cast_key^|xmlcast_key^) 
             LEFT_PAREN!
-                ( (multiset_key LEFT_PAREN (select_key|with_key)) => (multiset_key! LEFT_PAREN! subquery RIGHT_PAREN!)
-                | concatenation_wrapper
-                )
-                as_key! type_spec
+            ( (multiset_key LEFT_PAREN+ (select_key|with_key)) => (multiset_key! LEFT_PAREN! subquery RIGHT_PAREN!)
+              (as_key! type_spec)?
+            | concatenation_wrapper as_key! type_spec
+            )
             RIGHT_PAREN!
     |    chr_key^
             LEFT_PAREN! 
