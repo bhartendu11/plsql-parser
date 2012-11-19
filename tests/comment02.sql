@@ -31,5 +31,3 @@ SELECT  -- REFS.*
 	-- , SYS_CONNECT_BY_PATH(table_name, '/') "Path"
 FROM REFS
 CONNECT BY NOCYCLE PRIOR r_owner = owner AND PRIOR r_table_name = table_name
-/
-
