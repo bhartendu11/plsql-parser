@@ -406,11 +406,11 @@ concatenation_op
     |    VERTICAL_BAR VERTICAL_BAR
     ;
 
-// multiset_op
-// 	:	multiset_key
-//         ( except_key | intersect_key | union_key )
-//         ( all_key | distinct_key )?
-//     ;
+ multiset_op
+    :    multiset_key
+         ( except_key | intersect_key | union_key )
+         ( all_key | distinct_key )?
+    ;
 
 outer_join_sign
     :    LEFT_PAREN PLUS_SIGN RIGHT_PAREN

@@ -979,7 +979,7 @@ interval_expression
     ;
 
 model_expression
-    :    (unary_expression -> unary_expression)
+    :    (multiset_expression -> multiset_expression)
         (LEFT_BRACKET model_expression_element RIGHT_BRACKET
             -> ^(MODEL_EXPRESSION[$LEFT_BRACKET] $model_expression model_expression_element))?
     ;
@@ -1019,6 +1019,11 @@ multi_column_for_loop
             )
         RIGHT_PAREN
         -> ^(FOR_MULTI_COLUMN[$for_key.start] column_name+ ^(in_key subquery? expression_list*))
+    ;
+
+multiset_expression
+    :    unary_expression
+         ( multiset_op^ unary_expression )*
     ;
 
 unary_expression

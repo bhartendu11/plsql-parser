@@ -709,7 +709,7 @@ equality_expression
         |    empty_key
         |    of_key type_key? LEFT_PAREN only_key? type_spec (COMMA type_spec)* RIGHT_PAREN
         )
-    )*
+    )?
     ;
 
 
@@ -790,7 +790,7 @@ interval_expression
     ;
 
 model_expression
-    :    unary_expression
+    :    multiset_expression
         (LEFT_BRACKET model_expression_element RIGHT_BRACKET)?
     ;
 
@@ -824,6 +824,11 @@ multi_column_for_loop
             |    (LEFT_PAREN)=> LEFT_PAREN expression_list (COMMA expression_list)* RIGHT_PAREN
             )
         RIGHT_PAREN
+    ;
+
+multiset_expression
+    :    unary_expression
+         ( multiset_op unary_expression )*
     ;
 
 unary_expression

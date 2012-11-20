@@ -104,8 +104,10 @@ cast_multiset05.sql OK
 cast_multiset06.sql OK
 cast_multiset07.sql OK
 cast_multiset08.sql OK
-//!! FAILs ATM cast_multiset09.sql OK
 cast_multiset10.sql OK
+cast_multiset13.sql OK
+cast_multiset14.sql OK
+cast_multiset15.sql OK
 case_when01.sql OK
 case_when02.sql OK
 case_when03.sql OK
@@ -602,6 +604,9 @@ update_statement:
    where department_id = 100 
    returning salary into :bnd1>>  OK
 condition18.sql OK
+cast_multiset09.sql OK
+cast_multiset11.sql OK
+cast_multiset12.sql OK
 
 merge_statement:
 merge01.sql OK
