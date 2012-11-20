@@ -1128,7 +1128,7 @@ standard_function
             RIGHT_PAREN! over_clause?
     |    (cast_key^|xmlcast_key^) 
             LEFT_PAREN!
-            ( (multiset_key LEFT_PAREN+ (select_key|with_key)) => (multiset_key! LEFT_PAREN! subquery RIGHT_PAREN!)
+            ( (multiset_key LEFT_PAREN+ (select_key|with_key)) => (multiset_key! LEFT_PAREN! subquery order_by_clause? RIGHT_PAREN!)
               (as_key! type_spec)?
             | concatenation_wrapper as_key! type_spec
             )
