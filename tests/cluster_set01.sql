@@ -3,8 +3,7 @@ clus_tab as (
 select id,
        a.attribute_name aname,
        a.conditional_operator op,
-       nvl(a.attribute_str_value,
-         round(a.attribute_num_value),4)) val,
+       nvl(a.attribute_str_value, round(a.attribute_num_value),4) val,
        a.attribute_support support,
        a.attribute_confidence confidence
   from table(dbms_data_mining.get_model_details_km('km_sh_clus_sample')) t,
