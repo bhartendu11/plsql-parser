@@ -159,7 +159,7 @@ PERIOD
 EXACT_NUM_LIT
     : (
             UNSIGNED_INTEGER
-            ( '.' UNSIGNED_INTEGER
+            ( '.' UNSIGNED_INTEGER?
             |    {$type = UNSIGNED_INTEGER;}
             ) ( ('E' | 'e') ('+' | '-')? UNSIGNED_INTEGER {$type = APPROXIMATE_NUM_LIT;} )?
     |    '.' UNSIGNED_INTEGER ( ('E' | 'e') ('+' | '-')? UNSIGNED_INTEGER {$type = APPROXIMATE_NUM_LIT;} )?
