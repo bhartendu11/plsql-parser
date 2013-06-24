@@ -698,6 +698,14 @@ end loop>> OK
   end loop;
 end loop outer_loop>> OK
 
+<<for i in abc.count..10 loop
+  for j in 1..abc.count loop
+   for j in 1.. abc.count loop
+    null;
+   end loop;
+  end loop;
+end loop outer_loop>> OK
+
 forall_statement:
 <<forall j in 4 .. 7
       select employee_id.* from employees where deptsxx = 200>> OK

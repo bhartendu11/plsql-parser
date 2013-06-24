@@ -116,8 +116,12 @@ FOR_NOTATION
         {state.type = UNSIGNED_INTEGER; emit(); advanceInput();}
         '..'
         {state.type = DOUBLE_PERIOD; emit(); advanceInput();}
-        UNSIGNED_INTEGER
-        {state.type = UNSIGNED_INTEGER; emit(); advanceInput(); $channel=HIDDEN;}
+        ( UNSIGNED_INTEGER
+          {state.type = UNSIGNED_INTEGER; emit(); advanceInput(); }
+        |	REGULAR_ID
+          {state.type = REGULAR_ID; emit(); advanceInput(); }
+        )?
+        { $channel=HIDDEN; }
     ;
 
 //{ Rule #358 <NATIONAL_CHAR_STRING_LIT> - subtoken typecast in <REGULAR_ID>, it also incorporates <character_representation>
@@ -228,6 +232,7 @@ RIGHT_PAREN
     :    ')'
     ;
 
+// Not allowed in SQL, but in PL/SQL(ADA) yes
 DOUBLE_ASTERISK
     :    '**'
     ;
