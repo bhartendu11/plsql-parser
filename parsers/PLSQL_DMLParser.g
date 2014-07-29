@@ -383,7 +383,7 @@ pivot_in_clause
     :    in_key
         LEFT_PAREN
             (    (select_key)=> subquery {mode = 1;}
-            |    (any_key)=> any_key (COMMA any_key)* {mode = 1;}
+            |    (any_key)=> any_key (COMMA any_key)* {mode = 2;}
             |    pivot_in_clause_element (COMMA pivot_in_clause_element)*
             )
         RIGHT_PAREN
