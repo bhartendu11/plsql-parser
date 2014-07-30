@@ -427,7 +427,7 @@ unpivot_in_elements
     :   (    column_name
         |    LEFT_PAREN column_name (COMMA column_name)* RIGHT_PAREN
         )
-        (    as_key?
+        (    as_key
         (    constant
         |    (LEFT_PAREN)=> LEFT_PAREN constant (COMMA constant)* RIGHT_PAREN
         )
