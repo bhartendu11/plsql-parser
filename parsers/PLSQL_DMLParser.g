@@ -593,10 +593,10 @@ update_statement
 
 // $<Update - Specific Clauses
 update_set_clause
-@init    {    int mode = 0;    }
+@init    {    int mode = 1;    }
     :    set_key
-    (    column_based_update_set_clause (COMMA column_based_update_set_clause)* {mode = 1;}
-    |    value_key LEFT_PAREN id RIGHT_PAREN EQUALS_OP expression
+    (    column_based_update_set_clause (COMMA column_based_update_set_clause)*
+    |    value_key LEFT_PAREN id RIGHT_PAREN EQUALS_OP expression {mode = 0;}
     )
         ->{mode == 1}? ^(set_key column_based_update_set_clause+)
         -> ^(set_key ^(value_key id ^(EXPR expression)))
