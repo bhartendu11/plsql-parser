@@ -877,7 +877,7 @@ equality_expression
                 -> {isNegated}? ^(IS_NOT_OF_TYPE $equality_expression type_spec+)
                 -> ^(IS_OF_TYPE $equality_expression type_spec+)
         )
-    )*
+    )?
     ;
 
 
