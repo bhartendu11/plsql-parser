@@ -533,7 +533,7 @@ insert_into_clause
     ;
 
 values_clause
-    :    values_key expression_list
+    :    values_key (expression_list | record_name)
     ;
 
 // $>

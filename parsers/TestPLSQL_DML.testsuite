@@ -571,6 +571,18 @@ insert_statement:
       into large_orders 
          values(oid, ottl, sid, cid) 
    select o.* from orders o>>  OK
+insert01.sql OK
+insert02.sql OK
+insert03.sql OK
+insert04.sql OK
+insert05.sql OK
+insert06.sql OK
+insert07.sql OK
+insert08.sql OK
+insert09.sql OK
+insert10.sql OK
+insert11.sql OK
+insert12.sql OK
 
 delete_statement:
 <<delete from product_descriptions 
