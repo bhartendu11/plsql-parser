@@ -546,7 +546,7 @@ SQL92_RESERVED_EXCEPTION
     advanceInput();
 
     $type = Token.INVALID_TOKEN_TYPE;
-    int markModel = input.mark();
+    int markException = input.mark();
 
     // Now loop over next Tokens in the input and eventually set Token's type to REGULAR_ID
 
@@ -554,7 +554,7 @@ SQL92_RESERVED_EXCEPTION
     // nextToken either returns NULL => then the next token is put into the queue tokenBuffer
     // or it returns Token.EOF, then nothing is put into the queue
     Token t1 = super.nextToken();
-    {    // This "if" handles the situation when the "model" is the last text in the input.
+    {    // This "if" handles the situation when the "exception" is the last text in the input.
         if( t1 != null && t1.getType() == Token.EOF)
         {
              $e.setType(REGULAR_ID);
@@ -584,7 +584,7 @@ SQL92_RESERVED_EXCEPTION
               } // while true
          } // else if( t1 != null && t1.getType() == Token.EOF)
     }
-    input.rewind(markModel);
+    input.rewind(markException);
     }
     ;
 
@@ -835,7 +835,7 @@ PLSQL_NON_RESERVED_USING
 PLSQL_NON_RESERVED_MODEL
     :    m='model'
     {
-         // "model" is a keyword if and only if it is followed by ("main"|"partition"|"dimension")
+         // "model" is a keyword if and only if it is followed by ("main"|"partition"|"dimension"|"unique"|"return")
          // otherwise it is a identifier(REGULAR_ID).
          // This wodoo implements something like context sensitive lexer.
          // Here we've matched the word "model". Then the Token is created and en-queued in tokenBuffer
@@ -872,10 +872,15 @@ PLSQL_NON_RESERVED_MODEL
                          t1 = super.nextToken(); if( t1 == null) { t1 = tokenBuffer.pollLast(); };
                          continue;
                      }
-
-                     if( t1.getType() != REGULAR_ID || // is something other than ("main"|"partition"|"dimension")
+                       
+                     if( t1.getType() == SQL92_RESERVED_UNIQUE)
+                     {
+                         break;
+                     }
+                     if( t1.getType() != REGULAR_ID || // is something other than ("main"|"partition"|"dimension"|"return")
                         ( !t1.getText().equalsIgnoreCase("main") &&
                           !t1.getText().equalsIgnoreCase("partition") &&
+                          !t1.getText().equalsIgnoreCase("return") &&
                           !t1.getText().equalsIgnoreCase("dimension")
                        ))
                      {

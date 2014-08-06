@@ -522,13 +522,13 @@ model_column_list
     ;
 
 model_column
-    :    expression table_alias?
-        -> ^(MODEL_COLUMN table_alias? ^(EXPR expression))
+    :    expression column_alias?
+        -> ^(MODEL_COLUMN column_alias? ^(EXPR expression))
     ;
 
 model_rules_clause
-    :    model_rules_part? LEFT_PAREN model_rules_element (COMMA model_rules_element)* RIGHT_PAREN
-        -> ^(MODEL_RULES model_rules_element+ model_rules_part?)
+    :    model_rules_part? LEFT_PAREN (model_rules_element (COMMA model_rules_element)*)? RIGHT_PAREN
+        -> ^(MODEL_RULES model_rules_element* model_rules_part?)
     ;
 
 model_rules_part

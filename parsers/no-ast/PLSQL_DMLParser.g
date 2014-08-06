@@ -404,11 +404,11 @@ model_column_list
     ;
 
 model_column
-    :    expression table_alias?
+    :    expression column_alias?
     ;
 
 model_rules_clause
-    :    model_rules_part? LEFT_PAREN model_rules_element (COMMA model_rules_element)* RIGHT_PAREN
+    :    model_rules_part? LEFT_PAREN (model_rules_element (COMMA model_rules_element)*)? RIGHT_PAREN
     ;
 
 model_rules_part
