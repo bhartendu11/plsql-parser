@@ -334,12 +334,17 @@ start_part
     ;
 
 group_by_clause
-    :   (group_key) => group_key by_key group_by_elements
-            ((COMMA group_by_elements)=> COMMA group_by_elements)*
-            having_clause?
+    :   (group_key) => group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		having_clause?
     |   (having_key) => having_clause
-            (group_key by_key group_by_elements
-            ((COMMA group_by_elements)=> COMMA group_by_elements)*)?
+		(group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		)?
     ;
 
 group_by_elements
