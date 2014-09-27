@@ -334,12 +334,17 @@ start_part
     ;
 
 group_by_clause
-    :   (group_key) => group_key by_key group_by_elements
-            ((COMMA group_by_elements)=> COMMA group_by_elements)*
-            having_clause?
+    :   (group_key) => group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		having_clause?
     |   (having_key) => having_clause
-            (group_key by_key group_by_elements
-            ((COMMA group_by_elements)=> COMMA group_by_elements)*)?
+		(group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		)?
     ;
 
 group_by_elements
@@ -404,11 +409,11 @@ model_column_list
     ;
 
 model_column
-    :    expression table_alias?
+    :    expression column_alias?
     ;
 
 model_rules_clause
-    :    model_rules_part? LEFT_PAREN model_rules_element (COMMA model_rules_element)* RIGHT_PAREN
+    :    model_rules_part? LEFT_PAREN (model_rules_element (COMMA model_rules_element)*)? RIGHT_PAREN
     ;
 
 model_rules_part
@@ -533,7 +538,7 @@ insert_into_clause
     ;
 
 values_clause
-    :    values_key expression_list
+    :    values_key (expression_list | record_name)
     ;
 
 // $>

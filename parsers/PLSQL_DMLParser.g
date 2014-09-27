@@ -45,6 +45,7 @@ tokens {
     PIVOT_IN_ELEMENT;
     UNPIVOT_IN_ELEMENT;
     HIERARCHICAL;
+    GROUP_BY_CLAUSE;
     GROUP_BY_ELEMENT;
     GROUPIN_SET;
     MAIN_MODEL;
@@ -267,10 +268,10 @@ query_block
         hierarchical_query_clause? 
         group_by_clause?
         model_clause?
-        -> {mode == 1}? ^(select_key from_clause distinct_key? unique_key? all_key? ASTERISK
-                into_clause? where_clause? hierarchical_query_clause? group_by_clause? model_clause?)
-        -> ^(select_key from_clause distinct_key? unique_key? all_key? ^(SELECT_LIST selected_element+)
-                into_clause? where_clause? hierarchical_query_clause? group_by_clause? model_clause?)
+        -> {mode == 1}? ^(select_key distinct_key? unique_key? all_key? ASTERISK
+                into_clause? from_clause where_clause? hierarchical_query_clause? group_by_clause? model_clause?)
+        -> ^(select_key distinct_key? unique_key? all_key? ^(SELECT_LIST selected_element+)
+                into_clause? from_clause where_clause? hierarchical_query_clause? group_by_clause? model_clause?)
     ;
 
 selected_element
@@ -448,10 +449,19 @@ start_part
     ;
 
 group_by_clause
-    :    (group_key) => group_key by_key group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)* having_clause?
-         -> ^(group_key ^(GROUP_BY_ELEMENT group_by_elements)+ having_clause?)
-    |    (having_key) => having_clause (group_key by_key group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*)?
-         -> ^(group_key having_clause ^(GROUP_BY_ELEMENT group_by_elements)+)
+    :   (group_key) => group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		having_clause?
+		-> ^(GROUP_BY_CLAUSE[$group_key.start] ^(group_key ^(GROUP_BY_ELEMENT group_by_elements)*) having_clause?)
+    |   (having_key) => having_clause
+		(group_key by_key
+			(LEFT_PAREN RIGHT_PAREN
+			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
+			)
+		)?
+		-> ^(GROUP_BY_CLAUSE[$having_key.start] having_clause ^(group_key ^(GROUP_BY_ELEMENT group_by_elements)*)?)
     ;
 
 group_by_elements
@@ -522,13 +532,13 @@ model_column_list
     ;
 
 model_column
-    :    expression table_alias?
-        -> ^(MODEL_COLUMN table_alias? ^(EXPR expression))
+    :    expression column_alias?
+        -> ^(MODEL_COLUMN column_alias? ^(EXPR expression))
     ;
 
 model_rules_clause
-    :    model_rules_part? LEFT_PAREN model_rules_element (COMMA model_rules_element)* RIGHT_PAREN
-        -> ^(MODEL_RULES model_rules_element+ model_rules_part?)
+    :    model_rules_part? LEFT_PAREN (model_rules_element (COMMA model_rules_element)*)? RIGHT_PAREN
+        -> ^(MODEL_RULES model_rules_element* model_rules_part?)
     ;
 
 model_rules_part
@@ -669,7 +679,7 @@ insert_into_clause
     ;
 
 values_clause
-    :    values_key^ expression_list
+    :    values_key^ (expression_list | record_name)
     ;
 
 // $>
