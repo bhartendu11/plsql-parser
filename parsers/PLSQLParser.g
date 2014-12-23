@@ -1246,7 +1246,7 @@ exception_handler
 // $>
 
 block
-    :    (declare_key? declare_spec+)?
+    :    (declare_key declare_spec+)?
         body
         -> ^(BLOCK declare_spec* body)
     ;

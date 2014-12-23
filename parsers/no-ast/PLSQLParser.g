@@ -965,7 +965,7 @@ trigger_block
     ;
 
 block
-    :    declare_key? declare_spec+
+    :    (declare_key declare_spec+)?
         body
     ;
 
