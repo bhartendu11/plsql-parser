@@ -461,7 +461,7 @@ group_by_clause
 			| group_by_elements ((COMMA group_by_elements)=> COMMA group_by_elements)*
 			)
 		)?
-		-> ^(GROUP_BY_CLAUSE[$having_key.start] having_clause ^(group_key ^(GROUP_BY_ELEMENT group_by_elements)*)?)
+		-> ^(GROUP_BY_CLAUSE[$having_clause.start] having_clause ^(group_key ^(GROUP_BY_ELEMENT group_by_elements)*)?)
     ;
 
 group_by_elements
